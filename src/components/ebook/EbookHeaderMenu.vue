@@ -21,15 +21,11 @@
   </transition>
 </template>
 <script>
-import { mapState } from 'vuex'
+import { ebookMixin } from '../../mixin/ebookMixin'
 
 export default {
   name: 'EbookHeader',
-  computed: {
-    ...mapState({
-      menuVisible: state => state.book.menuVisible
-    })
-  }
+  mixins: [ebookMixin]
 }
 </script>
 <style lang="scss" scoped>
