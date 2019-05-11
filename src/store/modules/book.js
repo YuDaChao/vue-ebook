@@ -2,7 +2,7 @@ const book = {
   // namespaced: true,
   state: {
     fileName: '',
-    headerVisible: false
+    menuVisible: false
   },
   getters: {
     fileName: state => state.fileName
@@ -11,16 +11,16 @@ const book = {
     SET_FILENAME: (state, fileName) => {
       state.fileName = fileName
     },
-    SET_HEADER_VISIBLE: (state, visible) => {
-      state.headerVisible = visible
+    SET_MENU_VISIBLE: (state, visible) => {
+      state.menuVisible = visible
     }
   },
   actions: {
     setFileName ({ commit }, fileName) {
       return commit('SET_FILENAME', fileName)
     },
-    setHeaderVisible ({ commit }, visible) {
-      commit('SET_HEADER_VISIBLE', visible)
+    setMenuVisible ({ commit }, visible) {
+      commit('SET_MENU_VISIBLE', visible)
     }
   }
 }

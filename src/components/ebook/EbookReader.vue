@@ -15,23 +15,28 @@ export default {
   computed: {
     ...mapState({
       fileName: state => state.book.fileName,
-      headerVisible: state => state.book.headerVisible
+      menuVisible: state => state.book.menuVisible
     })
   },
   methods: {
-    ...mapActions(['setFileName', 'setHeaderVisible']),
+    ...mapActions(['setFileName', 'setMenuVisible']),
     prevPage () {
       if (this.rendition) {
         this.rendition.prev()
+        this.hiddenMenu()
       }
     },
     nextPage () {
       if (this.rendition) {
         this.rendition.next()
+        this.hiddenMenu()
       }
     },
     toggleMenu () {
-      this.setHeaderVisible(!this.headerVisible)
+      this.setMenuVisible(!this.menuVisible)
+    },
+    hiddenMenu () {
+      this.setMenuVisible(false)
     },
     initEpub () {
       const fullPath = `${config.ePubPath}${this.fileName}.epub`

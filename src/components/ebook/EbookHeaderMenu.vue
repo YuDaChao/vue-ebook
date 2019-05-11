@@ -1,6 +1,6 @@
 <template>
-  <transition name="fade" mode="out-in">
-    <div class="ebook-header" v-show="headerVisible">
+  <transition name="slide-down" mode="out-in">
+    <div class="ebook-header" v-show="menuVisible">
       <div class="header-wrapper">
         <div class="left">
           <span class="icon-back icon" />
@@ -27,22 +27,13 @@ export default {
   name: 'EbookHeader',
   computed: {
     ...mapState({
-      headerVisible: state => state.book.headerVisible
+      menuVisible: state => state.book.menuVisible
     })
   }
 }
 </script>
 <style lang="scss" scoped>
 @import '../../assets/styles/global.scss';
-.fade-enter-active {
-  transition: all 0.3s ease-out;
-}
-.fade-leave-active {
-  transition: all 0.3s ease;
-}
-.fade-enter, .fade-leave-to {
-  transform: translateY(-100%);
-}
 
 .ebook-header {
   position: fixed;
