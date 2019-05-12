@@ -5,38 +5,55 @@
 </template>
 <script>
 import Epub from 'epubjs'
-import { mapActions, mapState } from 'vuex'
+import { ebookMixin } from '../../mixin/ebookMixin'
 import config from '../../config'
 
 global.epub = Epub
 
 export default {
   name: 'EbookReader',
-  computed: {
-    ...mapState({
-      fileName: state => state.book.fileName,
-      menuVisible: state => state.book.menuVisible
-    })
-  },
+  mixins: [ebookMixin],
   methods: {
-    ...mapActions(['setFileName', 'setMenuVisible']),
+    // 上一页
     prevPage () {
       if (this.rendition) {
         this.rendition.prev()
         this.hiddenMenu()
+        this.hiddenFontFamily()
       }
     },
+    // 下一页
     nextPage () {
       if (this.rendition) {
         this.rendition.next()
         this.hiddenMenu()
+        this.hiddenFontFamily()
       }
     },
+    // 控制是否显示菜单
     toggleMenu () {
       this.setMenuVisible(!this.menuVisible)
+      this.hiddenSetting()
+      this.hiddenFontFamily()
     },
+    // 隐藏菜单
     hiddenMenu () {
       this.setMenuVisible(false)
+      if (this.settingVisible >= 0) {
+        this.hiddenSetting()
+      }
+    },
+    // 隐藏设置菜单
+    hiddenSetting () {
+      if (this.settingVisible >= 0) {
+        this.setSettingVisible(-1)
+      }
+    },
+    // 隐藏字体设置菜单
+    hiddenFontFamily () {
+      if (this.settingFontFamilyViible) {
+        this.setFontFamilyVisible(false)
+      }
     },
     initEpub () {
       const fullPath = `${config.ePubPath}${this.fileName}.epub`
@@ -46,6 +63,7 @@ export default {
         height: window.innerHeight
         // method: 'default' // 新版本中需要删除此处 不然 touchstart touchend无法执行
       })
+      this.setCurrrentBook(this.book)
       this.rendition.display()
       this.rendition.on('touchstart', event => {
         // event.preventDefault()
